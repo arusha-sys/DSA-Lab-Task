@@ -1,3 +1,4 @@
+
 ******************* DSA-Lab-Task ******************* 
 ################### LAB#01 ###################
              ********** TASK 01  **********
@@ -500,6 +501,416 @@ head = head->next;
 delete temp;
 }
 return 0;
+}
+
+                ################### LAB#05 ###################
+                       ********** TASK 01  **********
+
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+    Node* prev;
+};
+
+Node* head = NULL;
+
+void insertAtStart(int value) {
+    Node* newNode = new Node();
+    newNode->data = value;
+
+    if (head == NULL) {
+        newNode->next = newNode;
+        newNode->prev = newNode;
+        head = newNode;
+    } else {
+        Node* tail = head->prev;
+
+        newNode->next = head;
+        newNode->prev = tail;
+
+        tail->next = newNode;
+        head->prev = newNode;
+
+        head = newNode;
+    }
+}
+
+void display() {
+    if (head == NULL) {
+        cout << "List is empty." << endl;
+        return;
+    }
+
+    Node* temp = head;
+    cout << "Circular Doubly Linked List: "<<endl;
+    do {
+        cout << temp->data << " ";
+        temp = temp->next;
+    } while (temp != head);
+    cout << endl;
+}
+
+
+int main() {
+    insertAtStart(60);
+    insertAtStart(70);
+     insertAtStart(80);
+    display();  
+
+    return 0;
+} 
+                   ********** TASK 02  **********
+
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+    Node* prev;
+};
+
+Node* head = NULL;
+
+void insertAtPosition(int value, int position) {
+    Node* newNode = new Node();
+    newNode->data = value;
+
+    if (head == NULL && position == 1) {
+        newNode->next = newNode;
+        newNode->prev = newNode;
+        head = newNode;
+        return;
+    }
+
+    if (position == 1) {
+        Node* tail = head->prev;
+        newNode->next = head;
+        newNode->prev = tail;
+        tail->next = newNode;
+        head->prev = newNode;
+        head = newNode;
+        return;
+    }
+
+    Node* temp = head;
+    int count = 1;
+
+    while (count < position - 1 && temp->next != head) {
+        temp = temp->next;
+        count++;
+    }
+
+    Node* nextNode = temp->next;
+    newNode->next = nextNode;
+    newNode->prev = temp;
+    temp->next = newNode;
+    nextNode->prev = newNode;
+}
+
+void display() {
+    if (head == NULL) {
+        cout << "List is empty." << endl;
+        return;
+    }
+
+    Node* temp = head;
+    cout << "Circular Doubly Linked List: "<<endl;
+    do {
+        cout << temp->data << " ";
+        temp = temp->next;
+    } while (temp != head);
+    cout << endl;
+}
+
+int main() {
+    insertAtPosition(60, 1);
+    insertAtPosition(70, 2);
+    insertAtPosition(80, 1);
+    insertAtPosition(90, 3);
+
+    display();  
+
+    return 0;
+} 
+            ********** TASK 03  **********
+
+#include <iostream>
+using namespace std;
+struct Node {
+    int data;
+    Node* next;
+    Node* prev;
+};
+Node* head = NULL;
+void insertAtEnd(int value) {
+    Node* newNode = new Node();
+    newNode->data = value;
+    if (head == NULL) {
+        newNode->next = newNode;
+        newNode->prev = newNode;
+        head = newNode;
+    } else {
+        Node* tail = head->prev;
+
+        newNode->next = head;
+        newNode->prev = tail;
+
+        tail->next = newNode;
+        head->prev = newNode;
+    }
+}
+void display() {
+    if (head == NULL) {
+        cout << "List is empty." << endl;
+        return;
+    }
+
+    Node* temp = head;
+    cout << "Circular Doubly Linked List: ";
+    do {
+        cout << temp->data << " ";
+        temp = temp->next;
+    } while (temp != head);
+    cout << endl;
+}
+int main() {
+    insertAtEnd(60);
+    insertAtEnd(70);
+    insertAtEnd(80);
+    display();  
+    return 0;
+}
+           ############### deletion  ##############
+                 ********** TASK 01  **********
+
+#include <iostream>
+using namespace std;
+struct Node {
+    int data;
+    Node* next;
+    Node* prev;
+};
+
+Node* head = NULL;
+
+void insertAtEnd(int value) {
+    Node* newNode = new Node();
+    newNode->data = value;
+    if (head == NULL) {
+        newNode->next = newNode;
+        newNode->prev = newNode;
+        head = newNode;
+    } else {
+        Node* tail = head->prev;
+        newNode->next = head;
+        newNode->prev = tail;
+        tail->next = newNode;
+        head->prev = newNode;
+    }
+}
+void deleteAtStart() {
+    if (head == NULL) {
+        cout << "List is empty.\n";
+        return;
+    }
+
+    if (head->next == head) {
+        delete head;
+        head = NULL;
+    } else {
+        Node* temp = head;
+        head = head->next;
+        head->prev = temp->prev;
+        temp->prev->next = head;
+        delete temp;
+    }
+}
+
+void display() {
+    if (head == NULL) {
+        cout << "List is empty.\n";
+        return;
+    }
+
+    Node* temp = head;
+    do {
+        cout << temp->data << " ";
+        temp = temp->next;
+    } while (temp != head);
+    cout << endl;
+}
+
+int main() {
+    insertAtEnd(60);
+    insertAtEnd(70);
+    insertAtEnd(80);
+
+    cout << "Before deletion: ";
+    display();
+
+    deleteAtStart();
+
+    cout << "After deletion: ";
+    display();
+
+    return 0;
+}
+                ********** TASK 02  **********
+
+#include <iostream>
+using namespace std;
+struct Node {
+    int data;
+    Node* next;
+    Node* prev;
+};
+Node* head = NULL;
+void insertAtEnd(int value) {
+    Node* newNode = new Node();
+    newNode->data = value;
+    if (head == NULL) {
+        newNode->next = newNode;
+        newNode->prev = newNode;
+        head = newNode;
+    } else {
+        Node* tail = head->prev;
+        newNode->next = head;
+        newNode->prev = tail;
+        tail->next = newNode;
+        head->prev = newNode;
+    }
+}
+void deleteAtPosition(int position) {
+    if (head == NULL) {
+        cout << "List is empty.";
+        return;
+    }
+    Node* temp = head;
+    int count = 1;
+    while (count < position && temp->next != head) {
+        temp = temp->next;
+        count++;
+    }
+    if (count != position) {
+        cout << "Position out of range.";
+        return;
+    }
+    if (temp == head && temp->next == head) {
+        delete temp;
+        head = NULL;
+    } else {
+        temp->prev->next = temp->next;
+        temp->next->prev = temp->prev;
+
+        if (temp == head) {
+            head = temp->next;  
+        }
+        delete temp;
+    }
+}
+void display() {
+    if (head == NULL) {
+        cout << "List is empty.";
+        return;
+    }
+    Node* temp = head;
+    do {
+        cout << temp->data << " ";
+        temp = temp->next;
+    } while (temp != head);
+    cout << endl;
+}
+
+int main() {
+    insertAtEnd(60);
+    insertAtEnd(70);
+    insertAtEnd(80);
+    insertAtEnd(90);
+
+    cout << "Before deletion: ";
+    display();
+
+    deleteAtPosition(3);
+
+    cout << "After deletion: ";
+    display();
+
+    return 0;
+}
+                ********** TASK 03  **********
+
+#include <iostream>
+using namespace std;
+struct Node {
+    int data;
+    Node* next;
+    Node* prev;
+};
+Node* head = NULL;
+
+void insertAtEnd(int value) {
+    Node* newNode = new Node();
+    newNode->data = value;
+    if (head == NULL) {
+        newNode->next = newNode;
+        newNode->prev = newNode;
+        head = newNode;
+    } else {
+        Node* tail = head->prev;
+        newNode->next = head;
+        newNode->prev = tail;
+        tail->next = newNode;
+        head->prev = newNode;
+    }
+}
+void deleteAtEnd() {
+    if (head == NULL) {
+        cout << "List is empty.";
+        return;
+    }
+    if (head->next == head) {
+        delete head;
+        head = NULL;
+    } else {
+        Node* tail = head->prev;
+        Node* newTail = tail->prev;
+        newTail->next = head;
+        head->prev = newTail;
+        delete tail;
+    }
+}
+void display() {
+    if (head == NULL) {
+        cout << "List is empty.";
+        return;
+    }
+
+    Node* temp = head;
+    do {
+        cout << temp->data << " ";
+        temp = temp->next;
+    } while (temp != head);
+    cout << endl;
+}
+
+int main() {
+    insertAtEnd(60);
+    insertAtEnd(70);
+    insertAtEnd(80);
+
+    cout << "Before deletion: ";
+    display();
+
+    deleteAtEnd();
+
+    cout << "After deletion: ";
+    display();
+
+    return 0;
 }
 
 
